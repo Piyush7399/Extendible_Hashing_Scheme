@@ -7,6 +7,7 @@ package Dbms;
 
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -22,15 +23,21 @@ public class GUI extends javax.swing.JFrame{
      */
         int global_depth;
         int bfr;
+        int local_depth;
         
         List<SinglyLinkedList> Directory = new ArrayList<>();
         List<SinglyLinkedList> ll = new ArrayList<>();
+        HashMap<SinglyLinkedList,Integer> index_track = new HashMap<>();
+        HashMap<SinglyLinkedList,Integer> LocalDepth_track = new HashMap<>();
         void construct(){
             try{
             int gd = Integer.parseInt(jTextField4.getText());
             global_depth = gd;
             int b = Integer.parseInt(jTextField5.getText());
             bfr = b;
+            }catch(Exception e){
+                JOptionPane.showMessageDialog(this,"Enter a valid Integers","Alert",JOptionPane.ERROR_MESSAGE);
+            }
             int Directory_Size=(int)(Math.pow(2,global_depth));
             Directory.clear();
             ll.clear();
@@ -38,6 +45,16 @@ public class GUI extends javax.swing.JFrame{
             SinglyLinkedList Sll1 = new SinglyLinkedList();
             ll.add(Sll0);
             ll.add(Sll1); 
+            index_track.put(Sll0,0);
+            index_track.put(Sll1,1);
+            LocalDepth_track.put(Sll0, 1);
+            LocalDepth_track.put(Sll1, 1);
+//            local_depth = 1;
+//            int bucket_size = (int)(Math.pow(2,local_depth));
+//            for(int i = 0;i < bucket_size; i++){
+//                SinglyLinkedList sll = new SinglyLinkedList();
+//                ll.add(sll);
+//            }
             for (int i = 0; i < Directory_Size; i += 1)
             {
             //    SinglyLinkedList Sll = new SinglyLinkedList();
@@ -45,12 +62,11 @@ public class GUI extends javax.swing.JFrame{
                 Directory.add(Sll0);
             else
                 Directory.add(Sll1);
+            //    Directory.add(ll.get(getLastBits(i,local_depth)));
             }
             JOptionPane.showMessageDialog(this,"Directory is initialized");
-            }
-            catch(Exception e){
-                JOptionPane.showMessageDialog(this,"Enter a valid Integers","Alert",JOptionPane.ERROR_MESSAGE);
-            }
+            
+            
         }
     public GUI() {
         initComponents();
@@ -141,15 +157,7 @@ public class GUI extends javax.swing.JFrame{
             .addGroup(layout.createSequentialGroup()
                 .addGap(59, 59, 59)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addGap(37, 37, 37)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jTextField5, javax.swing.GroupLayout.DEFAULT_SIZE, 83, Short.MAX_VALUE)
-                            .addComponent(jTextField4)))
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jButton2)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(37, 37, 37)
@@ -157,8 +165,16 @@ public class GUI extends javax.swing.JFrame{
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(40, 40, 40)
-                        .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 47, Short.MAX_VALUE)
+                        .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(37, 37, 37)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jTextField5, javax.swing.GroupLayout.DEFAULT_SIZE, 83, Short.MAX_VALUE)
+                            .addComponent(jTextField4))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 90, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -176,13 +192,13 @@ public class GUI extends javax.swing.JFrame{
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(43, 43, 43)
                 .addComponent(jButton2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 124, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -198,7 +214,7 @@ public class GUI extends javax.swing.JFrame{
                     .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 306, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(79, Short.MAX_VALUE))
         );
 
         pack();
@@ -224,6 +240,7 @@ public class GUI extends javax.swing.JFrame{
         }catch(Exception e){
             System.out.println(e);
             JOptionPane.showMessageDialog(this,"Invalid INPUTS BUCKET OVERFLOWED","Alert",JOptionPane.ERROR_MESSAGE);
+    //        e.printStackTrace(); 
         //    construct();
             
         }
@@ -261,19 +278,26 @@ public class GUI extends javax.swing.JFrame{
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField5ActionPerformed
  void insert(int val) throws Exception{
-            try{
+     //       try{
             int flag = 0;
             int hashvalue = hashfunction(val);
             int last_bits = getLastBits(hashvalue,global_depth);  
             if(Directory.get(last_bits).isEmpty())
                 flag = 1;
             Directory.get(last_bits).insertLast(val);
-            if(flag==1)
+            if(flag==1){
                 Directory.get(last_bits).setIndex(getLastBits(hashvalue,1));
-            else
+                index_track.put(Directory.get(last_bits),getLastBits(hashvalue,1));
+            }
+            else{
                 Directory.get(last_bits).setIndex(getLastBits(hashvalue, Directory.get(last_bits).getlocaldepth()));
+            //    index_track.put(Directory.get(last_bits),(getLastBits(hashvalue, Directory.get(last_bits).getlocaldepth())));
+                index_track.put(Directory.get(last_bits),(getLastBits(hashvalue, LocalDepth_track.get(Directory.get(last_bits)))));
+            }
         //   Directory.get(last_bits).setIndex(last_bits);
-           if(Directory.get(last_bits).size()>bfr){
+        int last_bits_check = last_bits;
+           while(Directory.get(last_bits_check).size()>bfr){
+               System.out.println("size---"+Directory.get(last_bits).size()+"   last_bits---"+last_bits);
                if(global_depth==Directory.get(last_bits).getlocaldepth()){
 //                   this.global_depth = this.global_depth+1;
                    global_depth = global_depth+1;
@@ -281,59 +305,96 @@ public class GUI extends javax.swing.JFrame{
                    Directory = restructure(Directory, ll, global_depth, last_bits);
                }
                else{
-                    int local_depth1 = Directory.get(last_bits).getlocaldepth();
+                //    int local_depth1 = Directory.get(last_bits).getlocaldepth();
+                    System.out.println("akjndkjas");
+                    int local_depth1 = LocalDepth_track.get(Directory.get(last_bits));
+                    System.out.println(local_depth1+"++++");
                     last_bits = getLastBits(hashvalue, local_depth1);
                     int global_depth1 = local_depth1+1;
+                //    System.out.println(local_depth1+"*****");
                    ll = change_ll(ll,Directory.get(last_bits),last_bits,global_depth1);
+                   
                    Directory = restructure(Directory, ll, global_depth, last_bits);
+                //   System.out.println(local_depth1+"-----");
+                   display();
+                
+                   System.out.println("size---"+Directory.get(last_bits).size()+"   last_bits---"+last_bits);
+                      System.out.println("|||||");
+                   System.out.println("|||||");
+               }
+               if(Directory.size()>5){
+                 //  break;
+                   throw new Exception("OVERFLOW"); 
+                   
                }
            }
-           }catch(Exception e){
-               
-               Directory.get(getLastBits(val,global_depth)).deleteLast();
-               JOptionPane.showMessageDialog(this,"Invalid INPUTS: OVERFLOWED","Alert",JOptionPane.ERROR_MESSAGE);
-           }
-           display();
+//           }catch(Exception e){
+//               
+//               Directory.get(getLastBits(val,global_depth)).deleteLast();
+//               JOptionPane.showMessageDialog(this,"Invalid INPUTS: OVERFLOWED","Alert",JOptionPane.ERROR_MESSAGE);
+//           }
+          // display();
         }
-        static List<SinglyLinkedList> restructure(List<SinglyLinkedList> Directory,List<SinglyLinkedList> ll, int gd, int ld){
+        List<SinglyLinkedList> restructure(List<SinglyLinkedList> Directory,List<SinglyLinkedList> ll, int gd, int ld){
         List<SinglyLinkedList> D = new ArrayList<>();
+       // System.out.println("HELOO");
         int Directory_Size=(int)(Math.pow(2,gd));
         int empty_index = -1;
         for (int i = 0; i < Directory_Size; i += 1)
         {
             int flag = 0;
             for( int j = 0; j < ll.size(); j += 1){
-                if(getLastBits(i,ll.get(j).getlocaldepth())==getLastBits(hashfunction(ll.get(j).getHead()),ll.get(j).getlocaldepth())){
+            //    if(getLastBits(i,ll.get(j).getlocaldepth())==getLastBits(hashfunction(ll.get(j).getHead()),ll.get(j).getlocaldepth())){
+            if(getLastBits(i,LocalDepth_track.get(ll.get(j)))==index_track.get(ll.get(j))){
+               // System.out.println(getLastBits(i,LocalDepth_track.get(ll.get(j)))+"......"+index_track.get(ll.get(j)));
                     D.add(ll.get(j));
                     flag = 1;
                     break;
                 }
-                if(ll.get(j).getHead()==-1)
-                    empty_index = j;
+//                if(ll.get(j).getHead()==-1)
+//                    empty_index = j;
             }
             if(flag==0){
+                System.out.println("AAAA");
                 D.add(ll.get(empty_index));
+                System.out.println("BBBB");
             }
+            
         }
+        
         return D;
     }
-            static List<SinglyLinkedList> change_ll(List<SinglyLinkedList> ll,SinglyLinkedList sll, int lb, int global_depth) throws Exception{
+        List<SinglyLinkedList> change_ll(List<SinglyLinkedList> ll,SinglyLinkedList sll, int lb, int global_depth) throws Exception{
         SinglyLinkedList new_sll1 = new SinglyLinkedList();
         SinglyLinkedList new_sll2 = new SinglyLinkedList();
+    //    SinglyLinkedLis
         for(int i = 0;i < ll.size(); i++){
         //   if(i==lb){
-          System.out.println("i:"+i+"index:"+ll.get(i).getIndex()+"lb"+lb);
-                if(ll.get(i).getIndex()==lb){
-                sll.printLinkedList();
+        //  System.out.println("i:"+i+"index:"+index_track.get(ll.get(i))+"lb"+lb);
+            //    if(ll.get(i).getIndex()==lb){
+               if(index_track.get(ll.get(i))==lb){
+            //    sll.printLinkedList();
                 int first_index = lb;
                 int second_index = (int)Math.pow(2,(global_depth-1))+lb;
-                sll.split(new_sll1,new_sll2, first_index, second_index, global_depth);
+                sll.split(new_sll1,new_sll2, first_index, second_index, global_depth,index_track,LocalDepth_track);
             }
+            //   System.out.println("vvvv");
         }
         //new_sll2.printLinkedList();
+     //    System.out.println("kkkkk");
+        LocalDepth_track.put(new_sll1, LocalDepth_track.get(sll)+1);
+        LocalDepth_track.put(new_sll2, LocalDepth_track.get(sll)+1);
         ll.remove(sll);
         ll.add(new_sll1);
         ll.add(new_sll2);
+//                     for(int k = 0;k < ll.size(); k++){
+//             //    System.out.println(ll.get(k).getIndex());
+//                 System.out.println("LD->"+LocalDepth_track.get(ll.get(k))+"Index->"+index_track.get(ll.get(k)));
+//                 System.out.println("------------");
+//                 ll.get(k).printLinkedList();
+//             }
+//         System.out.println("XXXXX");
+        
         return ll;
     }
     static int getLastBits(int num,int d){        
@@ -350,7 +411,9 @@ public class GUI extends javax.swing.JFrame{
     }
         public void display(){
         for(int k = 0;k < Directory.size(); k++){
-            System.out.println(Directory.get(k).getlocaldepth());
+        //    System.out.println(Directory.get(k).getlocaldepth());
+         //   System.out.println(index_track.get(Directory.get(k)));
+            System.out.println(getLocalDepthBF(Directory.get(k)));
             System.out.println("------------"+k);
             Directory.get(k).printLinkedList();
         }
@@ -362,6 +425,7 @@ public class GUI extends javax.swing.JFrame{
             // }
 
         System.out.println("*************");
+        System.out.println(Directory.get(1).getIndex());
     }
     public void display_table(){
         DefaultTableModel model = (DefaultTableModel) jTable2.getModel();
@@ -387,7 +451,8 @@ public class GUI extends javax.swing.JFrame{
                 }
                 for(j = 0;j < bfr;j++)
                     data[k][j+1]=val[j];
-                int ld = Directory.get(k).getlocaldepth();
+            //    int ld = Directory.get(k).getlocaldepth();
+                int ld = LocalDepth_track.get(Directory.get(k));
                 String bucket_ld = Integer.toString(ld);
             //    String[] data = {directory_index,val[0],val[1],val[2],bucket_ld};
                 data[k][j+1]=bucket_ld;
@@ -407,9 +472,20 @@ public class GUI extends javax.swing.JFrame{
 
 		return result.toString();
 	}
+        int getLocalDepthBF(SinglyLinkedList sll){
+        int pointer = 0;
+        for(int i = 0; i < Directory.size(); i++){
+            if(Directory.get(i)==sll)
+                pointer++;
+        }
+        int ans = (int)(Math.log(Directory.size()/pointer) / Math.log(2));
+        System.out.println(ans);
+        return ans;
+    }
+
     static int hashfunction(int val){
-        return val%15;
-       // return val;
+        return val%10;
+      //  return val;
     }
     /**
      * @param args the command line arguments

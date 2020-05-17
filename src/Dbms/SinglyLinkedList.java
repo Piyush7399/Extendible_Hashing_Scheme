@@ -5,6 +5,9 @@
  */
 package Dbms;
 
+import java.util.HashMap;
+import java.util.List;
+
 /**
  *
  * @author Piyush
@@ -150,17 +153,20 @@ public class SinglyLinkedList {
             }
                 
         }
-	public void split(SinglyLinkedList sll1, SinglyLinkedList sll2, int first_index, int second_index, int global_depth) throws Exception{
+	public void split(SinglyLinkedList sll1, SinglyLinkedList sll2, int first_index, int second_index, int global_depth,HashMap<SinglyLinkedList,Integer> index_track,HashMap<SinglyLinkedList,Integer> LocalDepth_track){
 
 		// sll1.setIndex(first_index);
 		// sll2.setIndex(second_index);
 		// sll1.head.index = first_index;
 		// sll2.head.index = second_index;
 		Node current = head;
+               
+                index_track.put(sll1, first_index);
+                index_track.put(sll2, second_index);
 		while(current!=null){
 			if(getLastBits(hashfunction(current.data),global_depth)==first_index){
 				sll1.insertLast(current.data);
-				sll1.setIndex(first_index);
+				 sll1.setIndex(first_index);
 			}
 			else{
 				sll2.insertLast(current.data);
@@ -168,16 +174,34 @@ public class SinglyLinkedList {
 			}
 			current = current.next;
 		}
-		sll1.head.local_depth = this.head.local_depth+1;
-		sll2.head.local_depth = this.head.local_depth+1;
+                sll1.printLinkedList();
+                sll2.printLinkedList();
+                if(!sll1.isEmpty())
+                    sll1.head.local_depth = this.head.local_depth+1;
+//                System.out.println(sll1.getIndex()+"/////");
+//                System.out.println("dddd");
+                if(!sll2.isEmpty())
+                    sll2.head.local_depth = this.head.local_depth+1;
+ //               System.out.println(sll2.getIndex()+">>>>>>");
+            //    LocalDepth_track.put(sll1, LocalDepth_track.get(S))
+                
 	}
+//            int getLocalDepthBF(SinglyLinkedList sll,List<SinglyLinkedList> Directory){
+//        int pointer = 0;
+//        for(int i = 0; i < Directory.size(); i++){
+//            if(Directory.get(i)==sll)
+//                pointer++;
+//        }
+//        int ans = (int)(Math.log(Directory.size()/pointer) / Math.log(2));
+//        return ans;
+//    }
 	static int getLastBits(int num,int d){        
             int number=(int)(Math.pow(2.00000,d)); 
             number--;
             return num&number;     // bitwise and 
 	}
         int hashfunction(int val){
-            return val%15;
+            return val%10;
          //   return val;
         }
     
