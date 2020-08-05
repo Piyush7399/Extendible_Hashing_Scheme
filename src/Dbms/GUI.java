@@ -297,7 +297,7 @@ public class GUI extends javax.swing.JFrame{
         //   Directory.get(last_bits).setIndex(last_bits);
         int last_bits_check = last_bits;
            while(Directory.get(last_bits_check).size()>bfr){
-               System.out.println("size---"+Directory.get(last_bits).size()+"   last_bits---"+last_bits);
+            //   System.out.println("size---"+Directory.get(last_bits).size()+"   last_bits---"+last_bits);
                if(global_depth==Directory.get(last_bits).getlocaldepth()){
 //                   this.global_depth = this.global_depth+1;
                    global_depth = global_depth+1;
@@ -306,9 +306,9 @@ public class GUI extends javax.swing.JFrame{
                }
                else{
                 //    int local_depth1 = Directory.get(last_bits).getlocaldepth();
-                    System.out.println("akjndkjas");
+                //    System.out.println("akjndkjas");
                     int local_depth1 = LocalDepth_track.get(Directory.get(last_bits));
-                    System.out.println(local_depth1+"++++");
+                //    System.out.println(local_depth1+"++++");
                     last_bits = getLastBits(hashvalue, local_depth1);
                     int global_depth1 = local_depth1+1;
                 //    System.out.println(local_depth1+"*****");
@@ -318,11 +318,12 @@ public class GUI extends javax.swing.JFrame{
                 //   System.out.println(local_depth1+"-----");
                    display();
                 
-                   System.out.println("size---"+Directory.get(last_bits).size()+"   last_bits---"+last_bits);
-                      System.out.println("|||||");
-                   System.out.println("|||||");
+//                   System.out.println("size---"+Directory.get(last_bits).size()+"   last_bits---"+last_bits);
+//                      System.out.println("|||||");
+//                   System.out.println("|||||");
                }
-               if(Directory.size()>5){
+               System.out.println(Directory.size());
+               if(Directory.size()>32){
                  //  break;
                    throw new Exception("OVERFLOW"); 
                    
@@ -334,6 +335,13 @@ public class GUI extends javax.swing.JFrame{
 //               JOptionPane.showMessageDialog(this,"Invalid INPUTS: OVERFLOWED","Alert",JOptionPane.ERROR_MESSAGE);
 //           }
           // display();
+                               for(int k = 0;k < ll.size(); k++){
+             //    System.out.println(ll.get(k).getIndex());
+                 System.out.println("LD->"+LocalDepth_track.get(ll.get(k))+"Index->"+index_track.get(ll.get(k)));
+                 System.out.println("------------");
+                 ll.get(k).printLinkedList();
+             }
+         System.out.println("XXXXX");
         }
         List<SinglyLinkedList> restructure(List<SinglyLinkedList> Directory,List<SinglyLinkedList> ll, int gd, int ld){
         List<SinglyLinkedList> D = new ArrayList<>();
